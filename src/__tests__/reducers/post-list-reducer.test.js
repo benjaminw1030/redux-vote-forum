@@ -1,4 +1,5 @@
 import postListReducer from "../../reducers/post-list-reducer";
+import * as c from '../../actions/ActionTypes';
 
 describe("postListReducer", () => {
   let action;
@@ -31,7 +32,7 @@ describe("postListReducer", () => {
   test("Should successfully add new post data to mainPostList", () => {
     const { header, timeStamp, voteCount, body, id } = postData;
     action = {
-      type: "ADD_POST",
+      type: c.ADD_POST,
       header: header,
       timeStamp: timeStamp,
       voteCount: voteCount,
@@ -52,7 +53,7 @@ describe("postListReducer", () => {
 
   test("Should increment voteCount by 1 when action is UPVOTE", () => {
     action = {
-      type: "UPVOTE",
+      type: c.UPVOTE,
       id: "dsfadsflkjasdlfkj",
     };
     expect(postListReducer(currentState, action)).toEqual({
@@ -68,7 +69,7 @@ describe("postListReducer", () => {
 
   test("Should decrement voteCount by 1 when action is DOWNVOTE", () => {
     action = {
-      type: "DOWNVOTE",
+      type: c.DOWNVOTE,
       id: "dsfadsflkjasdlfkj",
     };
     expect(postListReducer(currentState, action)).toEqual({

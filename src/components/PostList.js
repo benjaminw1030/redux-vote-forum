@@ -3,8 +3,13 @@ import Post from './Post';
 import PropTypes from 'prop-types';
 
 function PostList(props) {
+  const postListStyles = {
+    backgroundColor: 'pink',
+    fontFamily: 'arial',
+    paddingTop: '10px'
+  }
   return (
-    <div>
+    <div style={postListStyles}>
       {Object.values(props.postList).map((post) => 
         <Post post={post}
           onUpvote={props.onUpvoteClick}

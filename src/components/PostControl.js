@@ -3,6 +3,7 @@ import NewPostForm from "./NewPostForm";
 import PostList from "./PostList";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import * as a from "../actions";
 
 class PostControl extends React.Component {
   constructor(props) {
@@ -12,56 +13,44 @@ class PostControl extends React.Component {
 
   handleAddingNewPost = (newPost) => {
     const { dispatch } = this.props;
-    const { header, timeStamp, voteCount, body, id } = newPost;
-    const action = {
-      type: "ADD_POST",
-      header: header,
-      timeStamp: timeStamp,
-      voteCount: voteCount,
-      body: body,
-      id: id,
-    };
+    const action = a.addPost(newPost);
     dispatch(action);
-    const toggleAction = {
-      type: "TOGGLE_FORM",
-    };
+    const toggleAction = a.toggleForm();
     dispatch(toggleAction);
   };
 
   handleNewToggle = () => {
     const { dispatch } = this.props;
-    const action = {
-      type: "TOGGLE_FORM",
-    };
+    const action = a.toggleForm();
     dispatch(action);
   };
 
   handleUpvote = (id) => {
     const { dispatch } = this.props;
-    const action = {
-      type: "UPVOTE",
-      id: id,
-    };
+    const action = a.upvote(id);
     dispatch(action);
-  }
+  };
 
   handleDownvote = (id) => {
     const { dispatch } = this.props;
-    const action = {
-      type: 'DOWNVOTE',
-      id: id
-    }
+    const action = a.downvote(id);
     dispatch(action);
-  }
+  };
 
   render() {
     let visibleState = null;
     let buttonText = null;
     if (this.props.makingNewPost) {
-      visibleState = <NewPostForm onAddingPost={this.handleAddingNewPost}/>;
+      visibleState = <NewPostForm onAddingPost={this.handleAddingNewPost} />;
       buttonText = "Go Back";
     } else {
-      visibleState = <PostList postList={this.props.mainPostList} onUpvoteClick={this.handleUpvote} onDownvoteClick={this.handleDownvote} />;
+      visibleState = (
+        <PostList
+          postList={this.props.mainPostList}
+          onUpvoteClick={this.handleUpvote}
+          onDownvoteClick={this.handleDownvote}
+        />
+      );
       buttonText = "Make Post";
     }
     return (
@@ -80,9 +69,9 @@ PostControl.propTypes = {
 
 const sortByVote = (postList) => {
   const postArray = Object.entries(postList);
-  const sortedArray = postArray.sort((a, b) => b[1].voteCount - a[1].voteCount)
-  return Object.fromEntries(sortedArray)
-}
+  const sortedArray = postArray.sort((a, b) => b[1].voteCount - a[1].voteCount);
+  return Object.fromEntries(sortedArray);
+};
 
 const mapStateToProps = (state) => {
   const sortedList = sortByVote(state.mainPostList);

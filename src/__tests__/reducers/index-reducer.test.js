@@ -2,6 +2,7 @@ import rootReducer from "../../reducers/index";
 import { createStore } from "redux";
 import formVisibleReducer from "../../reducers/form-visible-reducer";
 import postListReducer from "../../reducers/post-list-reducer";
+import * as c from '../../actions/ActionTypes';
 
 let store = createStore(rootReducer);
 
@@ -24,7 +25,7 @@ describe('rootReducer', () => {
 
   test('Check that ADD_POST action works for postListReducer and root reducer', () => {
     const action = {
-      type: 'ADD_POST',
+      type: c.ADD_POST,
       header: 'Hello',
       timeStamp: 'Sun Jun 14 2020',
       voteCount: 5,
@@ -37,7 +38,7 @@ describe('rootReducer', () => {
 
   test('Check that TOGGLE_FORM action works for formVisibleReducer and root reducer', () => {
     const action = {
-      type: 'TOGGLE_FORM',
+      type: c.TOGGLE_FORM,
     }
     store.dispatch(action);
     expect(store.getState().makingNewPost).toEqual(formVisibleReducer(undefined, action));
