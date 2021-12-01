@@ -1,7 +1,7 @@
-import * as c from './ActionTypes'
+import * as c from "./ActionTypes";
 
 export const addPost = (post) => {
-  const { header, timeStamp, voteCount, body, id } = post;
+  const { header, timeStamp, voteCount, body, id, formattedElapsedTime, elapsedTime } = post;
   return {
     type: c.ADD_POST,
     header: header,
@@ -9,6 +9,8 @@ export const addPost = (post) => {
     voteCount: voteCount,
     body: body,
     id: id,
+    formattedElapsedTime: formattedElapsedTime,
+    elapsedTime: elapsedTime,
   };
 };
 
@@ -31,3 +33,9 @@ export const downvote = (id) => {
     id,
   };
 };
+
+export const updateTime = (id, formattedElapsedTime) => ({
+  type: c.UPDATE_TIME,
+  id: id,
+  formattedElapsedTime: formattedElapsedTime,
+});

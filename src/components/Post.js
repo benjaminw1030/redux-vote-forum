@@ -7,7 +7,7 @@ function Post(props) {
   return (
     <div>
       <h1>{post.header}</h1>
-      <p>Date Posted: {post.timeStamp}</p>
+      <p><em>Date Posted: {post.timeStamp} - {post.formattedElapsedTime}</em></p>
       <p>Votes: {post.voteCount}</p>
       <p>{post.body}</p>
       <button onClick={() => onUpvote(post.id)}>Purr</button>

@@ -10,6 +10,8 @@ describe("forum actions", () => {
         voteCount: 0,
         body: "test",
         id: "5",
+        formattedElapsedTime: "a few seconds ago",
+        elapsedTime: 0,
       })
     ).toEqual({
       type: c.ADD_POST,
@@ -18,6 +20,8 @@ describe("forum actions", () => {
       voteCount: 0,
       body: "test",
       id: "5",
+      formattedElapsedTime: "a few seconds ago",
+      elapsedTime: 0,
     });
   });
 
@@ -32,4 +36,12 @@ describe("forum actions", () => {
   test('downvote should create DOWNVOTE action', () => {
     expect(a.downvote('5')).toEqual({ type: c.DOWNVOTE, id: '5'})
   })
+
+  it('updateTime should creat UPDATE_TIME action', () => {
+    expect(a.updateTime(1, "A few seconds")).toEqual({
+      type: c.UPDATE_TIME,
+      id: 1,
+      formattedElapsedTime: "A few seconds"
+    });
+  });
 });

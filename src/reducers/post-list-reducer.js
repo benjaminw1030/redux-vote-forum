@@ -1,7 +1,8 @@
-import * as c from '../actions/ActionTypes';
+import * as c from "../actions/ActionTypes";
 
 export default (state = {}, action) => {
-  const { header, timeStamp, voteCount, body, id } = action;
+  const { header, timeStamp, voteCount, body, id, formattedElapsedTime, elapsedTime } =
+    action;
   switch (action.type) {
     case c.ADD_POST:
       return Object.assign({}, state, {
@@ -11,6 +12,8 @@ export default (state = {}, action) => {
           voteCount: voteCount,
           body: body,
           id: id,
+          elapsedTime: elapsedTime,
+          formattedElapsedTime: formattedElapsedTime,
         },
       });
     case c.UPVOTE:
@@ -21,6 +24,10 @@ export default (state = {}, action) => {
       let newState2 = { ...state };
       newState2[id].voteCount--;
       return newState2;
+    case c.UPDATE_TIME:
+      const newPost = Object.assign({}, state[id], { formattedElapsedTime });
+      const updatedState = Object.assign({}, state, { [id]: newPost });
+      return updatedState;
     default:
       return state;
   }

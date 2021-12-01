@@ -1,5 +1,6 @@
 import postListReducer from "../../reducers/post-list-reducer";
 import * as c from '../../actions/ActionTypes';
+import Moment from 'moment';
 
 describe("postListReducer", () => {
   let action;
@@ -12,6 +13,7 @@ describe("postListReducer", () => {
       timeStamp: "Sun Jun 14 2020",
       voteCount: 5,
       body: "My name is Johnny.",
+      elapsedTime: 0,
       id: "dsfadsflkjasdlfkj",
     };
     currentState = {
@@ -20,6 +22,7 @@ describe("postListReducer", () => {
         timeStamp: "Sun Jun 14 2020",
         voteCount: 5,
         body: "My name is Johnny.",
+        elapsedTime: 0,
         id: "dsfadsflkjasdlfkj",
       },
     };
@@ -29,15 +32,17 @@ describe("postListReducer", () => {
     expect(postListReducer({}, { type: null })).toEqual({});
   });
 
-  test("Should successfully add new post data to mainPostList", () => {
-    const { header, timeStamp, voteCount, body, id } = postData;
+  test("Should successfully add new post data to mainPostList with Moment-format time", () => {
+    const { header, timeStamp, voteCount, body, elapsedTime, id } = postData;
     action = {
       type: c.ADD_POST,
       header: header,
       timeStamp: timeStamp,
       voteCount: voteCount,
       body: body,
+      elapsedTime: elapsedTime,
       id: id,
+      formattedElapsedTime: new Moment().fromNow()
     };
 
     expect(postListReducer({}, action)).toEqual({
@@ -46,7 +51,9 @@ describe("postListReducer", () => {
         timeStamp: timeStamp,
         voteCount: voteCount,
         body: body,
+        elapsedTime: elapsedTime,
         id: id,
+        formattedElapsedTime: 'a few seconds ago',
       },
     });
   });
@@ -62,6 +69,7 @@ describe("postListReducer", () => {
         timeStamp: "Sun Jun 14 2020",
         voteCount: 6,
         body: "My name is Johnny.",
+        elapsedTime: 0,
         id: "dsfadsflkjasdlfkj",
       },
     });
@@ -78,8 +86,29 @@ describe("postListReducer", () => {
         timeStamp: "Sun Jun 14 2020",
         voteCount: 4,
         body: "My name is Johnny.",
+        elapsedTime: 0,
         id: "dsfadsflkjasdlfkj",
       },
+    });
+  });
+
+  test('should add formatted time elapsed to post', () => {
+    const { header, timeStamp, voteCount, body, elapsedTime, id } = postData;
+    action = {
+      type : c.UPDATE_TIME,
+      formattedElapsedTime: '1 minute ago',
+      id: id
+    };
+    expect(postListReducer({ [id]: postData }, action)).toEqual({
+      [id]: {
+        header: header,
+        timeStamp: timeStamp,
+        voteCount: voteCount,
+        body: body,
+        elapsedTime: elapsedTime,
+        id: id,
+        formattedElapsedTime: '1 minute ago'
+      }
     });
   });
 });
