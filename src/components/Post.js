@@ -6,12 +6,12 @@ function Post(props) {
 
   return (
     <div>
-      <h1>{post.postHeader}</h1>
+      <h1>{post.header}</h1>
       <p>Date Posted: {post.timeStamp}</p>
       <p>Votes: {post.voteCount}</p>
-      <p>{post.postBody}</p>
-      <button onclick={() => onUpvote(post.id)}>Upvote</button>
-      <button onclick={() => onDownvote(post.id)}>Downvote</button>
+      <p>{post.body}</p>
+      <button onClick={() => onUpvote(post.id)}>Purr</button>
+      <button onClick={() => onDownvote(post.id)}>Hiss</button>
       <hr/>
     </div>
   )

@@ -3,7 +3,7 @@ import React from 'react';
 
 function Header() { 
   return (
-    <h1>Message Board Title Goes Here</h1>
+    <h1>Things a cat might say</h1>
   )
 }
 

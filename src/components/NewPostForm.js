@@ -1,12 +1,20 @@
 import React from 'react';
 import { v4 } from 'uuid';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
-function NewPostForm() {
+const currentDate = new Date(Date.now()).toString();
+
+function NewPostForm(props) {
+
+  function newPostFormSubmission(event) {
+    event.preventDefault();
+    props.onAddingPost({ header: event.target.postHeader.value, body: event.target.postBody.value, id: v4(), voteCount: 0, timeStamp: currentDate })
+  }
+
   return (
     <div>
       <h1>New Post Form</h1>
-      <form>
+      <form onSubmit={newPostFormSubmission}>
       <input
           type='text'
           name='postHeader'
@@ -25,7 +33,7 @@ function NewPostForm() {
 }
 
 NewPostForm.propTypes = {
-  //function passed in from postcontrol
+  onAddingPost: PropTypes.func
 };
 
 //timestamps
